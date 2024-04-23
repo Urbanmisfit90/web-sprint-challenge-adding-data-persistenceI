@@ -8,7 +8,7 @@ const getAllTasks = async () => {
       'tasks.task_id',
       'tasks.task_description',
       'tasks.task_notes',
-      'tasks.task_completed',
+      knex.raw('CAST(tasks.task_completed AS BOOLEAN) as task_completed'),
       'projects.project_name',
       'projects.project_description'
     );
@@ -22,6 +22,8 @@ const createTask = async (projectId, description, notes) => {
     task_notes: notes,
   });
   const newTask = await getTaskById(taskId);
+  // Convert task_completed to boolean
+  newTask.task_completed = !!newTask.task_completed;
   return newTask;
 };
 
