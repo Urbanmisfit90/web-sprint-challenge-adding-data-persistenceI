@@ -7,7 +7,12 @@ const { getAllTasks, createTask } = require('./model');
 router.get('/', async (req, res) => {
   try {
     const tasks = await getAllTasks();
-    res.json(tasks);
+    // Ensure task_completed property is included for each task
+    const tasksWithCompleted = tasks.map(task => ({
+      ...task,
+      task_completed: !!task.task_completed // Ensure task_completed is converted to boolean
+    }));
+    res.json(tasksWithCompleted);
   } catch (error) {
     res.status(500).json({ error: "Could not retrieve tasks from the database." });
   }

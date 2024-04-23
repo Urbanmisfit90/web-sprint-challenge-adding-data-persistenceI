@@ -9,6 +9,7 @@ const getAllTasks = async () => {
       'tasks.task_description',
       'tasks.task_notes',
       'projects.project_name',
+      'tasks.task_completed',
       'projects.project_description'
     );
   return tasks;
