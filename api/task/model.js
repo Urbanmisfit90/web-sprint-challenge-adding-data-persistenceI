@@ -8,7 +8,6 @@ const getAllTasks = async () => {
       'tasks.task_id',
       'tasks.task_description',
       'tasks.task_notes',
-      knex.raw('CAST(tasks.task_completed AS BOOLEAN) as task_completed'),
       'projects.project_name',
       'projects.project_description'
     );
