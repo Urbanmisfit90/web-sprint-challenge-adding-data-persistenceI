@@ -14,25 +14,18 @@ router.get("", async (req, res) => {
 });
 
 router.post("", async (req, res) => {
-  console.log(req.body);
   try {
     let { project_name, project_description, project_completed } = req.body;
     // Ensure required fields are provided
-    if (project_completed == undefined) project_completed = false
-   // if (!project_description) project_description = ""
-    if (
-      !project_name
-    ) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Invalid project data. Please provide name, description, and completed (as a boolean).",
-        });
+    if (project_completed === undefined) project_completed = false;
+    // Validate required fields
+    if (!project_name) {
+      return res.status(400).json({
+        error: "Invalid project data. Please provide name, description, and completed (as a boolean).",
+      });
     }
-    const projectId = await createProject(project_name, project_description, project_completed);
-    const newProject = await getProjectById(projectId);
-    res.status(201).json(newProject);
+    const newProject = await createProject(project_name, project_description, project_completed);
+    res.status(201).json(newProject); // Return the newly created project directly
   } catch (error) {
     res.status(500).json({ error: "Failed to create project." });
   }
